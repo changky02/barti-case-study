@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roadmap Prioritization Matrix</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: #0a0a0a;
+            padding: 40px 20px;
+            color: #ffffff;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: transparent;
+            padding: 20px;
+        }
+
+        .legend {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+            padding: 16px;
+            background: #0f0f0f;
+            border-radius: 8px;
+            border: 1px solid #2a2a2a;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: #d1d5db;
+        }
+
+        .legend-box {
+            width: 16px;
+            height: 16px;
+            border-radius: 4px;
+            border: 2px solid;
+        }
+
+        .legend-box.now {
+            background: rgba(52, 211, 153, 0.2);
+            border-color: #34d399;
+        }
+
+        .legend-box.next {
+            background: rgba(96, 165, 250, 0.2);
+            border-color: #60a5fa;
+        }
+
+        .legend-box.roadmap {
+            background: rgba(251, 191, 36, 0.2);
+            border-color: #fbbf24;
+        }
+
+        .legend-box.backlog {
+            background: rgba(167, 139, 250, 0.2);
+            border-color: #a78bfa;
+        }
+
+        .legend-box.future {
+            background: rgba(156, 163, 175, 0.2);
+            border-color: #9ca3af;
+        }
+
+        .matrix-container {
+            position: relative;
+            width: 100%;
+            height: 700px;
+            margin: 30px 0;
+            border: 2px solid #4a4a4a;
+            background: linear-gradient(to top, #1a0f0f 0%, #0f0f0f 50%, #0f1a0f 100%);
+        }
+
+        .axis-label {
+            position: absolute;
+            font-weight: 700;
+            color: #d1d5db;
+            font-size: 13px;
+        }
+
+        .axis-label.x-axis {
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .axis-label.y-axis {
+            top: 50%;
+            left: -55px;
+            transform: translateY(-50%) rotate(-90deg);
+            transform-origin: center;
+        }
+
+        .quadrant-line-h {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: #4a4a4a;
+            top: 50%;
+        }
+
+        .quadrant-line-v {
+            position: absolute;
+            top: 0;
+            height: 100%;
+            width: 1px;
+            background: #4a4a4a;
+            left: 50%;
+        }
+
+        .quadrant-label {
+            position: absolute;
+            font-size: 11px;
+            color: #6b7280;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .theme-bubble {
+            position: absolute;
+            background: #1a1a1a;
+            border: 2px solid #4a4a4a;
+            border-radius: 12px;
+            padding: 12px 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+        }
+
+        .theme-bubble:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.8);
+            z-index: 100;
+        }
+
+        .theme-bubble.priority-now {
+            border-color: #34d399;
+            background: linear-gradient(135deg, rgba(52, 211, 153, 0.2) 0%, rgba(52, 211, 153, 0.05) 100%);
+        }
+
+        .theme-bubble.priority-next {
+            border-color: #60a5fa;
+            background: linear-gradient(135deg, rgba(96, 165, 250, 0.2) 0%, rgba(96, 165, 250, 0.05) 100%);
+        }
+
+        .theme-bubble.priority-roadmap {
+            border-color: #fbbf24;
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.2) 0%, rgba(251, 191, 36, 0.05) 100%);
+        }
+
+        .theme-bubble.priority-backlog {
+            border-color: #a78bfa;
+            background: linear-gradient(135deg, rgba(167, 139, 250, 0.2) 0%, rgba(167, 139, 250, 0.05) 100%);
+        }
+
+        .theme-bubble.priority-future {
+            border-color: #9ca3af;
+            background: linear-gradient(135deg, rgba(156, 163, 175, 0.2) 0%, rgba(156, 163, 175, 0.05) 100%);
+        }
+
+        .theme-bubble.priority-deprioritize {
+            border-color: #ef4444;
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.2) 0%, rgba(239, 68, 68, 0.05) 100%);
+        }
+
+        .theme-number {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #4a4a4a;
+            color: white;
+            font-size: 11px;
+            font-weight: 700;
+            text-align: center;
+            line-height: 20px;
+            margin-right: 6px;
+        }
+
+        .theme-bubble.priority-now .theme-number {
+            background: #34d399;
+            color: #0a0a0a;
+        }
+
+        .theme-bubble.priority-next .theme-number {
+            background: #60a5fa;
+            color: #0a0a0a;
+        }
+
+        .theme-bubble.priority-roadmap .theme-number {
+            background: #fbbf24;
+            color: #0a0a0a;
+        }
+
+        .theme-bubble.priority-backlog .theme-number {
+            background: #a78bfa;
+            color: #0a0a0a;
+        }
+
+        .theme-bubble.priority-future .theme-number {
+            background: #9ca3af;
+            color: #0a0a0a;
+        }
+
+        .theme-bubble.priority-deprioritize .theme-number {
+            background: #ef4444;
+        }
+
+        .theme-name {
+            font-size: 13px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-box now"></div>
+                <span><strong>DO NOW</strong> - High urgency + high value</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-box next"></div>
+                <span><strong>DO NEXT</strong> - High urgency + medium value</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-box roadmap"></div>
+                <span><strong>ROADMAP</strong> - Medium urgency + high value</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-box backlog"></div>
+                <span><strong>BACKLOG</strong> - Medium urgency + medium value</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-box future"></div>
+                <span><strong>FUTURE</strong> - Low urgency + high value</span>
+            </div>
+        </div>
+
+        <div class="matrix-container">
+            <!-- Axis labels -->
+            <div class="axis-label x-axis">Strategic Value →</div>
+            <div class="axis-label y-axis">Urgency →</div>
+
+            <!-- Quadrant lines -->
+            <div class="quadrant-line-h"></div>
+            <div class="quadrant-line-v"></div>
+
+            <!-- Quadrant labels -->
+            <div class="quadrant-label" style="top: 35px; left: 80px;">High Urgency / Low Value</div>
+            <div class="quadrant-label" style="top: 35px; right: 80px;">DO NOW</div>
+            <div class="quadrant-label" style="bottom: 35px; left: 80px;">DEPRIORITIZE</div>
+            <div class="quadrant-label" style="bottom: 35px; right: 80px;">FUTURE</div>
+
+            <!-- Theme Bubbles -->
+            <!-- High Urgency + High Value (Top Right) -->
+            <div class="theme-bubble priority-now" style="top: 15%; right: 15%;">
+                <span class="theme-number">1</span>
+                <div class="theme-name">Predictive Denial Prevention</div>
+            </div>
+
+            <div class="theme-bubble priority-now" style="top: 25%; right: 8%;">
+                <span class="theme-number">2</span>
+                <div class="theme-name">Retention Fundamentals</div>
+            </div>
+
+            <!-- High Urgency + Medium Value (Top Middle) -->
+            <div class="theme-bubble priority-next" style="top: 12%; right: 45%;">
+                <span class="theme-number">3</span>
+                <div class="theme-name">RCM Table Stakes</div>
+            </div>
+
+            <div class="theme-bubble priority-next" style="top: 28%; right: 52%;">
+                <span class="theme-number">4</span>
+                <div class="theme-name">OD-Specific Workflows</div>
+            </div>
+
+            <!-- Medium Urgency + High Value (Middle Right) -->
+            <div class="theme-bubble priority-roadmap" style="top: 48%; right: 18%;">
+                <span class="theme-number">5</span>
+                <div class="theme-name">Workflow Efficiency</div>
+            </div>
+
+            <div class="theme-bubble priority-roadmap" style="top: 58%; right: 10%;">
+                <span class="theme-number">6</span>
+                <div class="theme-name">Device Integration Platform</div>
+            </div>
+
+            <!-- Medium Urgency + Medium Value (Middle Middle) -->
+            <div class="theme-bubble priority-backlog" style="top: 52%; right: 48%;">
+                <span class="theme-number">7</span>
+                <div class="theme-name">Expansion Revenue</div>
+            </div>
+
+            <div class="theme-bubble priority-backlog" style="top: 65%; right: 55%;">
+                <span class="theme-number">8</span>
+                <div class="theme-name">Multi-Location Management</div>
+            </div>
+
+            <!-- Low Urgency + High Value (Bottom Right) -->
+            <div class="theme-bubble priority-future" style="bottom: 15%; right: 12%;">
+                <span class="theme-number">9</span>
+                <div class="theme-name">Market Expansion</div>
+            </div>
+
+            <!-- Low Urgency + Low Value (Bottom Left) -->
+            <div class="theme-bubble priority-deprioritize" style="bottom: 20%; left: 15%;">
+                <span class="theme-number">10</span>
+                <div class="theme-name">Nice-to-Have Enhancements</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
