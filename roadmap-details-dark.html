@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strategic Theme Details</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: #0a0a0a;
+            padding: 40px 20px;
+            color: #ffffff;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: transparent;
+            padding: 20px;
+        }
+
+        .theme-detail {
+            background: #0f0f0f;
+            border: 1px solid #2a2a2a;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .theme-detail-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid #2a2a2a;
+        }
+
+        .theme-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #4a4a4a;
+            color: white;
+            font-size: 14px;
+            font-weight: 700;
+            margin-right: 12px;
+        }
+
+        .theme-detail-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .theme-detail-meta {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .meta-item {
+            font-size: 13px;
+        }
+
+        .meta-label {
+            color: #9ca3af;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 11px;
+            margin-bottom: 6px;
+        }
+
+        .meta-value {
+            color: #d1d5db;
+            font-weight: 400;
+            line-height: 1.5;
+        }
+
+        .feature-list {
+            background: #1a1a1a;
+            padding: 16px;
+            border-radius: 8px;
+            border: 1px solid #2a2a2a;
+        }
+
+        .feature-list-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: #9ca3af;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+        }
+
+        .feature-list ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .feature-list li {
+            font-size: 13px;
+            color: #d1d5db;
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+            line-height: 1.5;
+        }
+
+        .feature-list li:before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #6b7280;
+            font-weight: bold;
+        }
+
+        .feature-list li:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Color coding for theme numbers */
+        .theme-number.now {
+            background: #34d399;
+            color: #0a0a0a;
+        }
+
+        .theme-number.next {
+            background: #60a5fa;
+            color: #0a0a0a;
+        }
+
+        .theme-number.roadmap {
+            background: #fbbf24;
+            color: #0a0a0a;
+        }
+
+        .theme-number.backlog {
+            background: #a78bfa;
+            color: #0a0a0a;
+        }
+
+        .theme-number.future {
+            background: #9ca3af;
+            color: #0a0a0a;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Theme 1 -->
+        <div class="theme-detail">
+            <div class="theme-detail-header">
+                <span class="theme-number now">1</span>
+                <div class="theme-detail-title">Predictive Denial Prevention</div>
+            </div>
+            <div class="theme-detail-meta">
+                <div class="meta-item">
+                    <div class="meta-label">Strategic Value</div>
+                    <div class="meta-value">Data moat from cross-practice intelligence. No competitor has predictive (only reactive validation).</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Urgency</div>
+                    <div class="meta-value">Customers losing $30-50K/year to preventable denials. Primary supplement angle.</div>
+                </div>
+            </div>
+            <div class="feature-list">
+                <div class="feature-list-title">Specific Features</div>
+                <ul>
+                    <li>Predictive denial analytics (flag issues BEFORE claim submission)</li>
+                    <li>Cross-practice payer intelligence (learn from 200+ practice network)</li>
+                    <li>Outcomes reporting with ROI transparency ("You saved $X this month")</li>
+                    <li>Payer reliability scoring (response time benchmarks)</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Theme 2 -->
+        <div class="theme-detail">
+            <div class="theme-detail-header">
+                <span class="theme-number now">2</span>
+                <div class="theme-detail-title">Retention Fundamentals</div>
+            </div>
+            <div class="theme-detail-meta">
+                <div class="meta-item">
+                    <div class="meta-label">Strategic Value</div>
+                    <div class="meta-value">5% retention improvement = $15M lifetime value. Must prove 95%+ before PE platforms.</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Urgency</div>
+                    <div class="meta-value">Top churn driver: technical issues (30%). Must fix before scaling.</div>
+                </div>
+            </div>
+            <div class="feature-list">
+                <div class="feature-list-title">Specific Features</div>
+                <ul>
+                    <li>Technical reliability engineering (prevent crashes, data loss)</li>
+                    <li>White-glove support infrastructure (2hr response SLA)</li>
+                    <li>Proactive monitoring & alerting (catch issues before customers report)</li>
+                    <li>Fast onboarding (< 30 days time-to-value)</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Theme 3 -->
+        <div class="theme-detail">
+            <div class="theme-detail-header">
+                <span class="theme-number next">3</span>
+                <div class="theme-detail-title">RCM Table Stakes</div>
+            </div>
+            <div class="theme-detail-meta">
+                <div class="meta-item">
+                    <div class="meta-label">Strategic Value</div>
+                    <div class="meta-value">Foundation for AI layer. All competitors have this - parity required.</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Urgency</div>
+                    <div class="meta-value">Can't sell without it. Evaluation filter for prospects.</div>
+                </div>
+            </div>
+            <div class="feature-list">
+                <div class="feature-list-title">Specific Features (Insurance Eligibility Lives Here)</div>
+                <ul>
+                    <li><strong>Real-time insurance eligibility verification</strong> (primary/secondary/tertiary payers)</li>
+                    <li><strong>Batch eligibility checking</strong> (5 days before appointments)</li>
+                    <li>Patient responsibility estimates (copay/deductible calculations)</li>
+                    <li>Clearinghouse integration (claims submission)</li>
+                    <li>Coverage issue flagging</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Theme 4 -->
+        <div class="theme-detail">
+            <div class="theme-detail-header">
+                <span class="theme-number next">4</span>
+                <div class="theme-detail-title">OD-Specific Workflows</div>
+            </div>
+            <div class="theme-detail-meta">
+                <div class="meta-item">
+                    <div class="meta-label">Strategic Value</div>
+                    <div class="meta-value">Differentiation vs. ModMed's multi-specialty genericness. Win OD-only practices.</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Urgency</div>
+                    <div class="meta-value">Needed to compete for beachhead customers (mid-size OD practices).</div>
+                </div>
+            </div>
+            <div class="feature-list">
+                <div class="feature-list-title">Specific Features</div>
+                <ul>
+                    <li>Optometry-specific charting templates</li>
+                    <li>OD coding intelligence (ICD-10 suggestions for optometry)</li>
+                    <li>Contact lens inventory management</li>
+                    <li>Vision plan billing (VSP, EyeMed workflows)</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Theme 5 -->
+        <div class="theme-detail">
+            <div class="theme-detail-header">
+                <span class="theme-number roadmap">5</span>
+                <div class="theme-detail-title">Workflow Efficiency</div>
+            </div>
+            <div class="theme-detail-meta">
+                <div class="meta-item">
+                    <div class="meta-label">Strategic Value</div>
+                    <div class="meta-value">RevolutionEHR's Achilles heel (97% retention but "too many clicks" complaints).</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Urgency</div>
+                    <div class="meta-value">Not the supplement angle. Needed for full switch phase.</div>
+                </div>
+            </div>
+            <div class="feature-list">
+                <div class="feature-list-title">Specific Features</div>
+                <ul>
+                    <li>AI workflow automation (reduce clicks by 50%)</li>
+                    <li>Smart defaults & predictions</li>
+                    <li>Voice-to-chart (ambient listening)</li>
+                    <li>Keyboard shortcuts & power user tools</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Theme 6 -->
+        <div class="theme-detail">
+            <div class="theme-detail-header">
+                <span class="theme-number roadmap">6</span>
+                <div class="theme-detail-title">Device Integration Platform</div>
+            </div>
+            <div class="theme-detail-meta">
+                <div class="meta-item">
+                    <div class="meta-label">Strategic Value</div>
+                    <div class="meta-value">RevolutionEHR weakness. Creates switching costs (practices won't leave if devices integrated).</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Urgency</div>
+                    <div class="meta-value">Needed for full switch with RevolutionEHR customers.</div>
+                </div>
+            </div>
+            <div class="feature-list">
+                <div class="feature-list-title">Specific Features</div>
+                <ul>
+                    <li>Optos integration (imaging)</li>
+                    <li>Zeiss integration (OCT, visual fields)</li>
+                    <li>Auto-refractor connectivity</li>
+                    <li>Device data auto-import to chart</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Theme 7 -->
+        <div class="theme-detail">
+            <div class="theme-detail-header">
+                <span class="theme-number backlog">7</span>
+                <div class="theme-detail-title">Expansion Revenue Capabilities</div>
+            </div>
+            <div class="theme-detail-meta">
+                <div class="meta-item">
+                    <div class="meta-label">Strategic Value</div>
+                    <div class="meta-value">Upsell opportunities after core EHR adoption. Expand ACV from $7.5K → $12K+.</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Urgency</div>
+                    <div class="meta-value">Build after proving core product-market fit with beachhead customers.</div>
+                </div>
+            </div>
+            <div class="feature-list">
+                <div class="feature-list-title">Specific Features</div>
+                <ul>
+                    <li>Claims scrubbing automation (catch errors before submission)</li>
+                    <li>Prior authorization automation</li>
+                    <li>Advanced reporting & analytics</li>
+                    <li>Revenue cycle consulting services</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Theme 8 -->
+        <div class="theme-detail">
+            <div class="theme-detail-header">
+                <span class="theme-number backlog">8</span>
+                <div class="theme-detail-title">Multi-Location Management</div>
+            </div>
+            <div class="theme-detail-meta">
+                <div class="meta-item">
+                    <div class="meta-label">Strategic Value</div>
+                    <div class="meta-value">Required for PE platform deals (1 deal = 50-200 practices). TAM expansion.</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Urgency</div>
+                    <div class="meta-value">Phase 3 requirement. Not needed for beachhead (mid-size, 3-5 ODs).</div>
+                </div>
+            </div>
+            <div class="feature-list">
+                <div class="feature-list-title">Specific Features</div>
+                <ul>
+                    <li>Centralized reporting across locations</li>
+                    <li>Role-based access control (corporate vs. location admins)</li>
+                    <li>Location hierarchy management</li>
+                    <li>Consolidated billing & payments</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Theme 9 -->
+        <div class="theme-detail">
+            <div class="theme-detail-header">
+                <span class="theme-number future">9</span>
+                <div class="theme-detail-title">Market Expansion</div>
+            </div>
+            <div class="theme-detail-meta">
+                <div class="meta-item">
+                    <div class="meta-label">Strategic Value</div>
+                    <div class="meta-value">TAM expansion ($75M ophthalmology market). But requires proving optometry dominance first.</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Urgency</div>
+                    <div class="meta-value">Can wait 12+ months. Focus on winning optometry segment first.</div>
+                </div>
+            </div>
+            <div class="feature-list">
+                <div class="feature-list-title">Specific Features</div>
+                <ul>
+                    <li>Ophthalmology-specific workflows</li>
+                    <li>ASC integration (surgical center)</li>
+                    <li>Surgical procedure documentation</li>
+                    <li>Post-op care protocols</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Theme 10 -->
+        <div class="theme-detail">
+            <div class="theme-detail-header">
+                <span class="theme-number" style="background: #ef4444;">10</span>
+                <div class="theme-detail-title">Nice-to-Have Enhancements</div>
+            </div>
+            <div class="theme-detail-meta">
+                <div class="meta-item">
+                    <div class="meta-label">Strategic Value</div>
+                    <div class="meta-value">Not competitive wedges. No differentiation vs. incumbents.</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Urgency</div>
+                    <div class="meta-value">No customer churn or acquisition blockers identified in research.</div>
+                </div>
+            </div>
+            <div class="feature-list">
+                <div class="feature-list-title">Specific Features</div>
+                <ul>
+                    <li>Advanced analytics dashboards</li>
+                    <li>Custom report builder</li>
+                    <li>Cosmetic UI updates</li>
+                    <li>Patient portal enhancements (low priority)</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
