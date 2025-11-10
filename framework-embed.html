@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Framework Embed Code</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #0a0a0a;
+            color: #ffffff;
+            padding: 40px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 32px;
+            margin-bottom: 20px;
+            color: #60a5fa;
+        }
+
+        h2 {
+            font-size: 20px;
+            margin: 30px 0 15px;
+            color: #34d399;
+        }
+
+        p {
+            margin-bottom: 15px;
+            color: #d1d5db;
+        }
+
+        .code-block {
+            background: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+
+        pre {
+            margin: 0;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        code {
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 13px;
+            color: #60a5fa;
+        }
+
+        .copy-button {
+            background: #60a5fa;
+            color: #0a0a0a;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: all 0.2s ease;
+        }
+
+        .copy-button:hover {
+            background: #93c5fd;
+        }
+
+        .copy-button:active {
+            transform: scale(0.98);
+        }
+
+        .preview {
+            background: #1a1a1a;
+            border: 2px solid #2a2a2a;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .preview h3 {
+            color: #fbbf24;
+            margin-bottom: 15px;
+        }
+
+        .note {
+            background: rgba(251, 191, 36, 0.1);
+            border-left: 4px solid #fbbf24;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .note strong {
+            color: #fbbf24;
+        }
+
+        iframe {
+            border: 2px solid #2a2a2a;
+            border-radius: 8px;
+            width: 100%;
+            height: 600px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Framework Overview - Embed Code</h1>
+        <p>Use this code to embed the interactive 6-Stage PM Framework into your presentation or website.</p>
+
+        <h2>Option 1: Simple iframe Embed (Recommended)</h2>
+        <p>If you host the HTML file on a web server, use this iframe code:</p>
+
+        <div class="code-block">
+            <pre><code>&lt;iframe
+  src="framework-overview.html"
+  width="100%"
+  height="800"
+  frameborder="0"
+  style="border: none; border-radius: 8px;"
+&gt;&lt;/iframe&gt;</code></pre>
+            <button class="copy-button" onclick="copyIframe()">Copy iframe Code</button>
+        </div>
+
+        <div class="note">
+            <strong>Note:</strong> Replace <code>framework-overview.html</code> with the actual URL where you host the file (e.g., <code>https://yoursite.com/framework-overview.html</code>)
+        </div>
+
+        <h2>Option 2: Inline HTML Embed</h2>
+        <p>For presentation tools like Gamma that support HTML blocks, paste this complete code:</p>
+
+        <div class="code-block">
+            <pre><code id="inline-code">&lt;div style="background: transparent; padding: 20px;"&gt;
+  &lt;style&gt;
+    .pm-framework * { margin: 0; padding: 0; box-sizing: border-box; }
+    .pm-framework { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #ffffff; }
+    .pm-framework .flow { display: flex; align-items: stretch; gap: 30px; }
+    .pm-framework .stage-container { flex: 1; position: relative; }
+    .pm-framework .stage { background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%); border: 2px solid #2a2a2a; border-radius: 12px; padding: 30px 24px; height: 100%; display: flex; flex-direction: column; justify-content: center; transition: all 0.3s ease; }
+    .pm-framework .stage:hover { transform: translateY(-6px); border-color: #4a4a4a; }
+    .pm-framework .stage-number { font-size: 12px; color: #666; font-weight: 700; margin-bottom: 10px; letter-spacing: 2px; }
+    .pm-framework .stage-title { font-size: 20px; font-weight: 600; margin-bottom: 10px; line-height: 1.2; }
+    .pm-framework .stage-desc { font-size: 13px; color: #999; line-height: 1.4; }
+    .pm-framework .stage-container:not(:last-child)::after { content: '→'; position: absolute; right: -24px; top: 50%; transform: translateY(-50%); font-size: 28px; color: #4a4a4a; z-index: 1; }
+    .pm-framework .stage-container:nth-child(1) .stage { border-color: #60a5fa; }
+    .pm-framework .stage-container:nth-child(1) .stage:hover { border-color: #93c5fd; background: linear-gradient(135deg, rgba(96, 165, 250, 0.15) 0%, rgba(96, 165, 250, 0.05) 100%); }
+    .pm-framework .stage-container:nth-child(1) .stage-title { color: #60a5fa; }
+    .pm-framework .stage-container:nth-child(2) .stage { border-color: #a78bfa; }
+    .pm-framework .stage-container:nth-child(2) .stage:hover { border-color: #c4b5fd; background: linear-gradient(135deg, rgba(167, 139, 250, 0.15) 0%, rgba(167, 139, 250, 0.05) 100%); }
+    .pm-framework .stage-container:nth-child(2) .stage-title { color: #a78bfa; }
+    .pm-framework .stage-container:nth-child(3) .stage { border-color: #22d3ee; }
+    .pm-framework .stage-container:nth-child(3) .stage:hover { border-color: #67e8f9; background: linear-gradient(135deg, rgba(34, 211, 238, 0.15) 0%, rgba(34, 211, 238, 0.05) 100%); }
+    .pm-framework .stage-container:nth-child(3) .stage-title { color: #22d3ee; }
+    .pm-framework .stage-container:nth-child(4) .stage { border-color: #34d399; }
+    .pm-framework .stage-container:nth-child(4) .stage:hover { border-color: #6ee7b7; background: linear-gradient(135deg, rgba(52, 211, 153, 0.15) 0%, rgba(52, 211, 153, 0.05) 100%); }
+    .pm-framework .stage-container:nth-child(4) .stage-title { color: #34d399; }
+    .pm-framework .stage-container:nth-child(5) .stage { border-color: #fbbf24; }
+    .pm-framework .stage-container:nth-child(5) .stage:hover { border-color: #fcd34d; background: linear-gradient(135deg, rgba(251, 191, 36, 0.15) 0%, rgba(251, 191, 36, 0.05) 100%); }
+    .pm-framework .stage-container:nth-child(5) .stage-title { color: #fbbf24; }
+    .pm-framework .stage-container:nth-child(6) .stage { border-color: #fb923c; }
+    .pm-framework .stage-container:nth-child(6) .stage:hover { border-color: #fdba74; background: linear-gradient(135deg, rgba(251, 146, 60, 0.15) 0%, rgba(251, 146, 60, 0.05) 100%); }
+    .pm-framework .stage-container:nth-child(6) .stage-title { color: #fb923c; }
+  &lt;/style&gt;
+
+  &lt;div class="pm-framework"&gt;
+    &lt;div class="flow"&gt;
+      &lt;div class="stage-container"&gt;
+        &lt;div class="stage"&gt;
+          &lt;div class="stage-number"&gt;01&lt;/div&gt;
+          &lt;div class="stage-title"&gt;Strategic Context&lt;/div&gt;
+          &lt;div class="stage-desc"&gt;Competitive landscape, customer segmentation, roadmap, strategic brief&lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class="stage-container"&gt;
+        &lt;div class="stage"&gt;
+          &lt;div class="stage-number"&gt;02&lt;/div&gt;
+          &lt;div class="stage-title"&gt;Discovery&lt;/div&gt;
+          &lt;div class="stage-desc"&gt;Deep validation + solution design&lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class="stage-container"&gt;
+        &lt;div class="stage"&gt;
+          &lt;div class="stage-number"&gt;03&lt;/div&gt;
+          &lt;div class="stage-title"&gt;Prioritization&lt;/div&gt;
+          &lt;div class="stage-desc"&gt;Risk-weighted roadmap decisions&lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class="stage-container"&gt;
+        &lt;div class="stage"&gt;
+          &lt;div class="stage-number"&gt;04&lt;/div&gt;
+          &lt;div class="stage-title"&gt;Scoping&lt;/div&gt;
+          &lt;div class="stage-desc"&gt;Collaborative MVP definition&lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class="stage-container"&gt;
+        &lt;div class="stage"&gt;
+          &lt;div class="stage-number"&gt;05&lt;/div&gt;
+          &lt;div class="stage-title"&gt;Launch&lt;/div&gt;
+          &lt;div class="stage-desc"&gt;Alpha → Beta → GA phased rollout&lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class="stage-container"&gt;
+        &lt;div class="stage"&gt;
+          &lt;div class="stage-number"&gt;06&lt;/div&gt;
+          &lt;div class="stage-title"&gt;Measurement&lt;/div&gt;
+          &lt;div class="stage-desc"&gt;Hypothesis validation &amp; iteration&lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            <button class="copy-button" onclick="copyInline()">Copy Inline Code</button>
+        </div>
+
+        <div class="note">
+            <strong>Note:</strong> This is a self-contained version that works in most HTML editors and presentation tools. All styles are scoped to avoid conflicts.
+        </div>
+
+        <h2>Preview</h2>
+        <div class="preview">
+            <h3>Live Preview:</h3>
+            <iframe src="framework-overview.html"></iframe>
+        </div>
+
+        <h2>Usage Instructions</h2>
+        <p><strong>For Gamma:</strong></p>
+        <ol style="color: #d1d5db; margin-left: 20px; line-height: 1.8;">
+            <li>Add an "Embed" or "HTML" card to your slide</li>
+            <li>Paste the Inline HTML code (Option 2)</li>
+            <li>Adjust height if needed (recommended: 400-500px)</li>
+        </ol>
+
+        <p style="margin-top: 20px;"><strong>For PowerPoint/Keynote:</strong></p>
+        <ol style="color: #d1d5db; margin-left: 20px; line-height: 1.8;">
+            <li>Save framework-overview.html to your web server</li>
+            <li>Insert → Web Object/iframe</li>
+            <li>Use the iframe embed code (Option 1) with full URL</li>
+        </ol>
+
+        <p style="margin-top: 20px;"><strong>For Google Slides:</strong></p>
+        <ol style="color: #d1d5db; margin-left: 20px; line-height: 1.8;">
+            <li>Take a screenshot of the framework</li>
+            <li>Insert as image (Google Slides doesn't support interactive HTML)</li>
+            <li>Or link to the hosted HTML page</li>
+        </ol>
+    </div>
+
+    <script>
+        function copyIframe() {
+            const code = `<iframe
+  src="framework-overview.html"
+  width="100%"
+  height="800"
+  frameborder="0"
+  style="border: none; border-radius: 8px;"
+></iframe>`;
+
+            navigator.clipboard.writeText(code).then(() => {
+                alert('iframe code copied to clipboard!');
+            });
+        }
+
+        function copyInline() {
+            const code = document.getElementById('inline-code').textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                alert('Inline HTML code copied to clipboard!');
+            });
+        }
+    </script>
+</body>
+</html>

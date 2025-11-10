@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>6-Stage PM Framework Overview</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #0a0a0a;
+            color: #ffffff;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            padding: 60px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 1600px;
+            width: 100%;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .header h1 {
+            font-size: 48px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            letter-spacing: -0.5px;
+        }
+
+        .header p {
+            font-size: 24px;
+            color: #999;
+            font-weight: 300;
+        }
+
+        .flow {
+            display: flex;
+            align-items: stretch;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .stage-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .stage {
+            background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
+            border: 2px solid #2a2a2a;
+            border-radius: 16px;
+            padding: 40px 32px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .stage:hover {
+            transform: translateY(-8px);
+            border-color: #4a4a4a;
+        }
+
+        .stage-number {
+            font-size: 14px;
+            color: #666;
+            font-weight: 700;
+            margin-bottom: 12px;
+            letter-spacing: 2px;
+        }
+
+        .stage-title {
+            font-size: 26px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            letter-spacing: -0.3px;
+            line-height: 1.2;
+        }
+
+        .stage-desc {
+            font-size: 15px;
+            color: #999;
+            line-height: 1.5;
+        }
+
+        /* Arrow between stages */
+        .stage-container:not(:last-child)::after {
+            content: '→';
+            position: absolute;
+            right: -32px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 32px;
+            color: #4a4a4a;
+            z-index: 1;
+        }
+
+        /* Strategic Context (Stage 1) - Blue */
+        .stage-container:nth-child(1) .stage {
+            border-color: #60a5fa;
+        }
+
+        .stage-container:nth-child(1) .stage:hover {
+            border-color: #93c5fd;
+            background: linear-gradient(135deg, rgba(96, 165, 250, 0.15) 0%, rgba(96, 165, 250, 0.05) 100%);
+        }
+
+        .stage-container:nth-child(1) .stage-title {
+            color: #60a5fa;
+        }
+
+        /* Discovery (Stage 2) - Purple */
+        .stage-container:nth-child(2) .stage {
+            border-color: #a78bfa;
+        }
+
+        .stage-container:nth-child(2) .stage:hover {
+            border-color: #c4b5fd;
+            background: linear-gradient(135deg, rgba(167, 139, 250, 0.15) 0%, rgba(167, 139, 250, 0.05) 100%);
+        }
+
+        .stage-container:nth-child(2) .stage-title {
+            color: #a78bfa;
+        }
+
+        /* Build vs Buy (Stage 3) - Cyan */
+        .stage-container:nth-child(3) .stage {
+            border-color: #22d3ee;
+        }
+
+        .stage-container:nth-child(3) .stage:hover {
+            border-color: #67e8f9;
+            background: linear-gradient(135deg, rgba(34, 211, 238, 0.15) 0%, rgba(34, 211, 238, 0.05) 100%);
+        }
+
+        .stage-container:nth-child(3) .stage-title {
+            color: #22d3ee;
+        }
+
+        /* Scoping (Stage 4) - Green */
+        .stage-container:nth-child(4) .stage {
+            border-color: #34d399;
+        }
+
+        .stage-container:nth-child(4) .stage:hover {
+            border-color: #6ee7b7;
+            background: linear-gradient(135deg, rgba(52, 211, 153, 0.15) 0%, rgba(52, 211, 153, 0.05) 100%);
+        }
+
+        .stage-container:nth-child(4) .stage-title {
+            color: #34d399;
+        }
+
+        /* Execution (Stage 5) - Yellow */
+        .stage-container:nth-child(5) .stage {
+            border-color: #fbbf24;
+        }
+
+        .stage-container:nth-child(5) .stage:hover {
+            border-color: #fcd34d;
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.15) 0%, rgba(251, 191, 36, 0.05) 100%);
+        }
+
+        .stage-container:nth-child(5) .stage-title {
+            color: #fbbf24;
+        }
+
+        /* Launch & Measurement (Stage 6) - Orange */
+        .stage-container:nth-child(6) .stage {
+            border-color: #fb923c;
+        }
+
+        .stage-container:nth-child(6) .stage:hover {
+            border-color: #fdba74;
+            background: linear-gradient(135deg, rgba(251, 146, 60, 0.15) 0%, rgba(251, 146, 60, 0.05) 100%);
+        }
+
+        .stage-container:nth-child(6) .stage-title {
+            color: #fb923c;
+        }
+
+        @media (max-width: 1400px) {
+            .flow {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 40px;
+            }
+
+            .stage-container::after {
+                display: none;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .flow {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .flow {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media print {
+            body {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>6-Stage PM Methodology</h1>
+            <p>Strategy → Discovery → Execution</p>
+        </div>
+
+        <div class="flow">
+            <!-- Stage 1: Strategic Context -->
+            <div class="stage-container">
+                <div class="stage">
+                    <div class="stage-number">01</div>
+                    <div class="stage-title">Strategic Context</div>
+                    <div class="stage-desc">Competitive landscape, customer segmentation, roadmap, strategic brief</div>
+                </div>
+            </div>
+
+            <!-- Stage 2: Discovery -->
+            <div class="stage-container">
+                <div class="stage">
+                    <div class="stage-number">02</div>
+                    <div class="stage-title">Discovery</div>
+                    <div class="stage-desc">Deep validation + solution design</div>
+                </div>
+            </div>
+
+            <!-- Stage 3: Prioritization -->
+            <div class="stage-container">
+                <div class="stage">
+                    <div class="stage-number">03</div>
+                    <div class="stage-title">Prioritization</div>
+                    <div class="stage-desc">Risk-weighted roadmap decisions</div>
+                </div>
+            </div>
+
+            <!-- Stage 4: Scoping -->
+            <div class="stage-container">
+                <div class="stage">
+                    <div class="stage-number">04</div>
+                    <div class="stage-title">Scoping</div>
+                    <div class="stage-desc">Collaborative MVP definition</div>
+                </div>
+            </div>
+
+            <!-- Stage 5: Launch -->
+            <div class="stage-container">
+                <div class="stage">
+                    <div class="stage-number">05</div>
+                    <div class="stage-title">Launch</div>
+                    <div class="stage-desc">Alpha → Beta → GA phased rollout</div>
+                </div>
+            </div>
+
+            <!-- Stage 6: Measurement -->
+            <div class="stage-container">
+                <div class="stage">
+                    <div class="stage-number">06</div>
+                    <div class="stage-title">Measurement</div>
+                    <div class="stage-desc">Hypothesis validation & iteration</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
