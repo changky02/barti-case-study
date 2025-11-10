@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Optometry EHR Feature Competitive Matrix</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .filters {
+            padding: 20px 30px;
+            background: #fafafa;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .filter-group label {
+            font-weight: 600;
+            font-size: 13px;
+            color: #666;
+        }
+
+        select {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 13px;
+            background: white;
+            cursor: pointer;
+        }
+
+        .legend {
+            padding: 20px 30px;
+            background: #f9f9f9;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .legend-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .legend-items {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+        }
+
+        .legend-badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 11px;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            padding: 20px 30px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        thead {
+            background: #f5f5f5;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        th {
+            padding: 12px 10px;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid #ddd;
+            white-space: nowrap;
+        }
+
+        th:first-child {
+            position: sticky;
+            left: 0;
+            background: #f5f5f5;
+            z-index: 11;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid #eee;
+            transition: background 0.2s;
+        }
+
+        tbody tr:hover {
+            background: #f9f9f9;
+        }
+
+        tbody tr.category-header {
+            background: #667eea;
+            color: white;
+            font-weight: 600;
+        }
+
+        tbody tr.category-header:hover {
+            background: #5568d3;
+        }
+
+        tbody tr.category-header td {
+            padding: 10px;
+            font-size: 14px;
+        }
+
+        td {
+            padding: 12px 10px;
+            border-right: 1px solid #f0f0f0;
+        }
+
+        td:first-child {
+            position: sticky;
+            left: 0;
+            background: white;
+            font-weight: 500;
+            max-width: 250px;
+        }
+
+        tbody tr:hover td:first-child {
+            background: #f9f9f9;
+        }
+
+        .feature-name {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .feature-desc {
+            font-size: 11px;
+            color: #666;
+            margin-top: 4px;
+            line-height: 1.4;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .badge-tier1 { background: #fee; color: #c00; }
+        .badge-tier2 { background: #ffe; color: #c60; }
+        .badge-tier3 { background: #fef; color: #90c; }
+        .badge-emerging { background: #eff; color: #069; }
+        .badge-differentiator { background: #efe; color: #060; }
+        .badge-moat { background: #eef; color: #06c; }
+        .badge-nice { background: #f0f0f0; color: #666; }
+
+        .status-yes { color: #22c55e; font-weight: 600; }
+        .status-no { color: #ef4444; font-weight: 600; }
+        .status-partial { color: #f59e0b; font-weight: 600; }
+        .status-unknown { color: #9ca3af; font-weight: 600; }
+
+        .importance-critical {
+            background: #fee;
+            border-left: 3px solid #ef4444;
+            font-weight: 600;
+        }
+        .importance-high {
+            background: #fef7ee;
+            border-left: 3px solid #f59e0b;
+            font-weight: 600;
+        }
+        .importance-moderate {
+            background: #fafafa;
+            border-left: 3px solid #94a3b8;
+        }
+        .importance-low {
+            color: #9ca3af;
+        }
+
+        .tooltip {
+            position: relative;
+            cursor: help;
+            border-bottom: 1px dotted #999;
+        }
+
+        footer {
+            padding: 20px 30px;
+            background: #fafafa;
+            border-top: 1px solid #e0e0e0;
+            font-size: 12px;
+            color: #666;
+            text-align: center;
+        }
+
+        @media (max-width: 1200px) {
+            table { font-size: 12px; }
+            th, td { padding: 8px 6px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏥 Optometry EHR Feature Competitive Matrix</h1>
+            <p class="subtitle">Comprehensive feature-by-feature comparison: Barti vs. ModMed, Nextech, RevolutionEHR, Compulink, Eyefinity</p>
+        </header>
+
+        <div class="filters">
+            <div class="filter-group">
+                <label>Filter by Category:</label>
+                <select id="categoryFilter">
+                    <option value="all">All Categories</option>
+                    <option value="clinical">Clinical / EHR Core</option>
+                    <option value="pm">Practice Management</option>
+                    <option value="rcm">Revenue Cycle Management</option>
+                    <option value="optical">Optical Retail</option>
+                    <option value="ai">AI / Automation</option>
+                    <option value="compliance">Compliance & Reporting</option>
+                    <option value="platform">Infrastructure / Platform</option>
+                    <option value="support">Customer Support</option>
+                    <option value="specialty">Specialty-Specific</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label>Filter by Classification:</label>
+                <select id="classificationFilter">
+                    <option value="all">All Classifications</option>
+                    <option value="tier1">Table Stakes - Tier 1</option>
+                    <option value="tier2">Table Stakes - Tier 2</option>
+                    <option value="tier3">Table Stakes - Tier 3</option>
+                    <option value="emerging">Emerging Table Stakes</option>
+                    <option value="differentiator">Differentiator</option>
+                    <option value="moat">Data Moat</option>
+                    <option value="nice">Nice-to-Have</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label>Barti Status:</label>
+                <select id="bartiFilter">
+                    <option value="all">All</option>
+                    <option value="has">Has Feature ✅</option>
+                    <option value="missing">Missing/Unknown ❓</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="legend">
+            <div class="legend-title">Status Legend:</div>
+            <div class="legend-items">
+                <div class="legend-item">
+                    <span class="status-yes">✅ Yes</span> - Feature confirmed
+                </div>
+                <div class="legend-item">
+                    <span class="status-partial">⚠️ Partial</span> - Limited or via integrations
+                </div>
+                <div class="legend-item">
+                    <span class="status-no">❌ No</span> - Feature not available
+                </div>
+                <div class="legend-item">
+                    <span class="status-unknown">❓ Unknown</span> - Needs validation
+                </div>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <table id="featureTable">
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>Classification</th>
+                        <th>ModMed</th>
+                        <th>Nextech</th>
+                        <th>Revolution<br>EHR</th>
+                        <th>Compulink</th>
+                        <th>Eyefinity</th>
+                        <th style="background: #ffe; font-weight: 700;">Barti</th>
+                        <th>Strategic Importance</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <!-- Clinical / EHR Core -->
+                    <tr class="category-header" data-category="clinical">
+                        <td colspan="9">CLINICAL / EHR CORE</td>
+                    </tr>
+                    <tr data-category="clinical" data-classification="tier1" data-barti="has">
+                        <td>
+                            <div class="feature-name">Patient Exam Documentation</div>
+                            <div class="feature-desc">Document patient exams, history, diagnoses, findings, prescriptions</div>
+                        </td>
+                        <td><span class="badge badge-tier1">Table Stakes (Tier 1)</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td class="importance-critical">CRITICAL - Core EHR function</td>
+                    </tr>
+                    <tr data-category="clinical" data-classification="tier2" data-barti="has">
+                        <td>
+                            <div class="feature-name">Customizable Templates</div>
+                            <div class="feature-desc">Specialty-specific or custom exam templates</div>
+                        </td>
+                        <td><span class="badge badge-tier2">Table Stakes (Tier 2)</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ Likely</span></td>
+                        <td class="importance-moderate">MODERATE - Expected baseline</td>
+                    </tr>
+                    <tr data-category="clinical" data-classification="tier2" data-barti="unknown">
+                        <td>
+                            <div class="feature-name">Imaging Integration</div>
+                            <div class="feature-desc">Import/annotate images from diagnostic devices (OCT, fundus camera)</div>
+                        </td>
+                        <td><span class="badge badge-tier2">Table Stakes (Tier 2)</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-partial">⚠️ Mixed</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-unknown">❓ Unknown</span></td>
+                        <td class="importance-moderate">MODERATE - Clinical workflow</td>
+                    </tr>
+                    <tr data-category="clinical" data-classification="tier1" data-barti="has">
+                        <td>
+                            <div class="feature-name">E-Prescribing (eRx)</div>
+                            <div class="feature-desc">Send prescriptions electronically to pharmacies</div>
+                        </td>
+                        <td><span class="badge badge-tier1">Table Stakes (Tier 1)</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td class="importance-critical">CRITICAL - MIPS requirement</td>
+                    </tr>
+                    <tr data-category="clinical" data-classification="differentiator" data-barti="has">
+                        <td>
+                            <div class="feature-name">Clinical Guidelines Integration</div>
+                            <div class="feature-desc">In-EHR access to evidence-based guidelines (e.g., AOA guidelines)</div>
+                        </td>
+                        <td><span class="badge badge-differentiator">Differentiator</span></td>
+                        <td><span class="status-no">❌ No</span></td>
+                        <td><span class="status-no">❌ No</span></td>
+                        <td><span class="status-no">❌ No</span></td>
+                        <td><span class="status-no">❌ No</span></td>
+                        <td><span class="status-no">❌ No</span></td>
+                        <td><span class="status-yes">✅ YES</span></td>
+                        <td class="importance-high">HIGH - Unique differentiator</td>
+                    </tr>
+
+                    <!-- Practice Management Core -->
+                    <tr class="category-header" data-category="pm">
+                        <td colspan="9">PRACTICE MANAGEMENT CORE</td>
+                    </tr>
+                    <tr data-category="pm" data-classification="tier1" data-barti="has">
+                        <td>
+                            <div class="feature-name">Appointment Calendar</div>
+                            <div class="feature-desc">Schedule, reschedule, cancel patient appointments</div>
+                        </td>
+                        <td><span class="badge badge-tier1">Table Stakes (Tier 1)</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td class="importance-critical">CRITICAL - Cannot operate without</td>
+                    </tr>
+                    <tr data-category="pm" data-classification="tier2" data-barti="has">
+                        <td>
+                            <div class="feature-name">Online Scheduling</div>
+                            <div class="feature-desc">Patients book appointments via website/portal</div>
+                        </td>
+                        <td><span class="badge badge-tier2">Table Stakes (Tier 2)</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td class="importance-moderate">MODERATE - Patient convenience</td>
+                    </tr>
+                    <tr data-category="pm" data-classification="tier2" data-barti="has">
+                        <td>
+                            <div class="feature-name">Patient Portal</div>
+                            <div class="feature-desc">Patients view records, message practice, request Rx refills</div>
+                        </td>
+                        <td><span class="badge badge-tier2">Table Stakes (Tier 2)</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td class="importance-moderate">MODERATE - MIPS requirement</td>
+                    </tr>
+                    <tr data-category="pm" data-classification="differentiator" data-barti="has">
+                        <td>
+                            <div class="feature-name">VoIP Phone System</div>
+                            <div class="feature-desc">Integrated phone system within EHR</div>
+                        </td>
+                        <td><span class="badge badge-differentiator">Differentiator</span></td>
+                        <td><span class="status-no">❌ No</span></td>
+                        <td><span class="status-no">❌ No</span></td>
+                        <td><span class="status-no">❌ No</span></td>
+                        <td><span class="status-no">❌ No</span></td>
+                        <td><span class="status-no">❌ No</span></td>
+                        <td><span class="status-yes">✅ YES</span></td>
+                        <td class="importance-moderate">MODERATE - Convenience feature</td>
+                    </tr>
+                    <tr data-category="pm" data-classification="differentiator" data-barti="has">
+                        <td>
+                            <div class="feature-name">AI Insurance Card Scanning</div>
+                            <div class="feature-desc">Upload cards, AI extracts data into EHR automatically</div>
+                        </td>
+                        <td><span class="badge badge-differentiator">Differentiator</span></td>
+                        <td><span class="status-no">❌ No</span></td>
+                        <td><span class="status-no">❌ No</span></td>
+                        <td><span class="status-no">❌ No</span></td>
+                        <td><span class="status-no">❌ No</span></td>
+                        <td><span class="status-no">❌ No</span></td>
+                        <td><span class="status-yes">✅ YES</span></td>
+                        <td class="importance-high">HIGH - Reduces errors & time</td>
+                    </tr>
+
+                    <!-- Revenue Cycle Management -->
+                    <tr class="category-header" data-category="rcm">
+                        <td colspan="9">REVENUE CYCLE MANAGEMENT (RCM)</td>
+                    </tr>
+                    <tr data-category="rcm" data-classification="tier1" data-barti="has">
+                        <td>
+                            <div class="feature-name">Claims Submission</div>
+                            <div class="feature-desc">Submit medical claims to insurance payers</div>
+                        </td>
+                        <td><span class="badge badge-tier1">Table Stakes (Tier 1)</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td class="importance-critical">CRITICAL - Revenue dependency</td>
+                    </tr>
+                    <tr data-category="rcm" data-classification="tier2" data-barti="has">
+                        <td>
+                            <div class="feature-name">Clearinghouse Integration</div>
+                            <div class="feature-desc">Connect to clearinghouses (Change Healthcare, Gateway EDI, etc.)</div>
+                        </td>
+                        <td><span class="badge badge-tier2">Table Stakes (Tier 2)</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td class="importance-critical">CRITICAL - Electronic claims</td>
+                    </tr>
+                    <tr data-category="rcm" data-classification="tier3" data-barti="unknown" style="background: #fffbeb;">
+                        <td>
+                            <div class="feature-name">🎯 Insurance Eligibility Verification</div>
+                            <div class="feature-desc">Check patient insurance coverage, copay, deductible before appointments (real-time + batch)</div>
+                        </td>
+                        <td><span class="badge badge-tier3">Table Stakes (Tier 3)</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ Likely</span></td>
+                        <td><span class="status-yes">✅ Likely</span></td>
+                        <td><span class="status-yes">✅ Likely</span></td>
+                        <td><span class="status-unknown">❓ UNKNOWN</span></td>
+                        <td class="importance-high">HIGH - Prevents denials, RCM pain</td>
+                    </tr>
+                    <tr data-category="rcm" data-classification="emerging" data-barti="unknown">
+                        <td>
+                            <div class="feature-name">Patient Responsibility Estimates</div>
+                            <div class="feature-desc">Calculate copay, deductible, coinsurance before service</div>
+                        </td>
+                        <td><span class="badge badge-emerging">Emerging Stakes</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-partial">⚠️ Via integrations</span></td>
+                        <td><span class="status-unknown">❓ Unknown</span></td>
+                        <td><span class="status-unknown">❓ Unknown</span></td>
+                        <td><span class="status-unknown">❓ Unknown</span></td>
+                        <td><span class="status-unknown">❓ Unknown</span></td>
+                        <td class="importance-moderate">MODERATE - Improves collections</td>
+                    </tr>
+                    <tr data-category="rcm" data-classification="emerging" data-barti="unknown">
+                        <td>
+                            <div class="feature-name">Real-Time Coding Validation</div>
+                            <div class="feature-desc">Flag coding errors before claim submission</div>
+                        </td>
+                        <td><span class="badge badge-emerging">Emerging Stakes</span></td>
+                        <td><span class="status-yes">✅ Yes (AI)</span></td>
+                        <td><span class="status-partial">⚠️ Basic</span></td>
+                        <td><span class="status-unknown">❓ Unknown</span></td>
+                        <td><span class="status-unknown">❓ Unknown</span></td>
+                        <td><span class="status-unknown">❓ Unknown</span></td>
+                        <td><span class="status-unknown">❓ Unknown</span></td>
+                        <td class="importance-high">HIGH - Prevents denials</td>
+                    </tr>
+                    <tr data-category="rcm" data-classification="differentiator" data-barti="unknown" style="background: #f0fdf4;">
+                        <td>
+                            <div class="feature-name">💡 AI Denial Prediction</div>
+                            <div class="feature-desc">Predict which claims will be denied BEFORE submission using ML</div>
+                        </td>
+                        <td><span class="badge badge-differentiator">Differentiator</span></td>
+                        <td><span class="status-no">❌ NO</span></td>
+                        <td><span class="status-no">❌ NO</span></td>
+                        <td><span class="status-no">❌ NO</span></td>
+                        <td><span class="status-no">❌ NO</span></td>
+                        <td><span class="status-no">❌ NO</span></td>
+                        <td><span class="status-unknown">❓ OPPORTUNITY</span></td>
+                        <td class="importance-high">HIGH - Major differentiator</td>
+                    </tr>
+                    <tr data-category="rcm" data-classification="moat" data-barti="unknown" style="background: #eff6ff;">
+                        <td>
+                            <div class="feature-name">🚀 Cross-Practice Payer Intelligence</div>
+                            <div class="feature-desc">Aggregate payer data across practices (response times, reliability scores, denial patterns)</div>
+                        </td>
+                        <td><span class="badge badge-moat">Data Moat</span></td>
+                        <td><span class="status-no">❌ NO</span></td>
+                        <td><span class="status-no">❌ NO</span></td>
+                        <td><span class="status-no">❌ NO</span></td>
+                        <td><span class="status-no">❌ NO</span></td>
+                        <td><span class="status-no">❌ NO</span></td>
+                        <td><span class="status-unknown">❓ OPPORTUNITY</span></td>
+                        <td class="importance-high">HIGH - Defensible advantage</td>
+                    </tr>
+
+                    <!-- AI / Automation Features -->
+                    <tr class="category-header" data-category="ai">
+                        <td colspan="9">AI / AUTOMATION FEATURES</td>
+                    </tr>
+                    <tr data-category="ai" data-classification="differentiator" data-barti="has" style="background: #f0fdf4;">
+                        <td>
+                            <div class="feature-name">AI Scribe / Ambient Listening</div>
+                            <div class="feature-desc">Real-time charting via voice recognition during patient exam</div>
+                        </td>
+                        <td><span class="badge badge-differentiator">Differentiator</span></td>
+                        <td><span class="status-yes">✅ YES</span></td>
+                        <td><span class="status-no">❌ No</span></td>
+                        <td><span class="status-no">❌ No</span></td>
+                        <td><span class="status-no">❌ No</span></td>
+                        <td><span class="status-no">❌ No</span></td>
+                        <td><span class="status-yes">✅ YES</span></td>
+                        <td class="importance-high">HIGH - Time savings</td>
+                    </tr>
+                    <tr data-category="ai" data-classification="differentiator" data-barti="has">
+                        <td>
+                            <div class="feature-name">AI Office Copilot</div>
+                            <div class="feature-desc">AI-powered phone scheduling, task automation</div>
+                        </td>
+                        <td><span class="badge badge-differentiator">Differentiator</span></td>
+                        <td><span class="status-no">❌ No</span></td>
+                        <td><span class="status-no">❌ No</span></td>
+                        <td><span class="status-no">❌ No</span></td>
+                        <td><span class="status-no">❌ No</span></td>
+                        <td><span class="status-no">❌ No</span></td>
+                        <td><span class="status-yes">✅ YES</span></td>
+                        <td class="importance-moderate">MODERATE - Reduces admin burden</td>
+                    </tr>
+                    <tr data-category="ai" data-classification="differentiator" data-barti="unknown">
+                        <td>
+                            <div class="feature-name">Adaptive Learning Engine</div>
+                            <div class="feature-desc">AI learns provider preferences over time (charting patterns, favorite diagnoses)</div>
+                        </td>
+                        <td><span class="badge badge-differentiator">Differentiator</span></td>
+                        <td><span class="status-yes">✅ YES</span></td>
+                        <td><span class="status-no">❌ No</span></td>
+                        <td><span class="status-no">❌ No</span></td>
+                        <td><span class="status-no">❌ No</span></td>
+                        <td><span class="status-no">❌ No</span></td>
+                        <td><span class="status-unknown">❓ Unknown</span></td>
+                        <td class="importance-moderate">MODERATE - Personalization</td>
+                    </tr>
+
+                    <!-- Optical Retail -->
+                    <tr class="category-header" data-category="optical">
+                        <td colspan="9">OPTICAL RETAIL (Optometry-Specific)</td>
+                    </tr>
+                    <tr data-category="optical" data-classification="tier2" data-barti="has">
+                        <td>
+                            <div class="feature-name">Frame/Lens Inventory Management</div>
+                            <div class="feature-desc">Track optical product inventory, pricing, orders</div>
+                        </td>
+                        <td><span class="badge badge-tier2">Table Stakes (Tier 2)</span></td>
+                        <td><span class="status-partial">⚠️ Basic</span></td>
+                        <td><span class="status-partial">⚠️ Basic</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td class="importance-moderate">MODERATE - 30-40% of practice revenue</td>
+                    </tr>
+                    <tr data-category="optical" data-classification="tier2" data-barti="has">
+                        <td>
+                            <div class="feature-name">Supplier Integration</div>
+                            <div class="feature-desc">Order frames/lenses from VSP, Essilor, etc.</div>
+                        </td>
+                        <td><span class="badge badge-tier2">Table Stakes (Tier 2)</span></td>
+                        <td><span class="status-partial">⚠️ Limited</span></td>
+                        <td><span class="status-partial">⚠️ Limited</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ Yes (VSP)</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td class="importance-moderate">MODERATE - Workflow efficiency</td>
+                    </tr>
+
+                    <!-- Compliance & Reporting -->
+                    <tr class="category-header" data-category="compliance">
+                        <td colspan="9">COMPLIANCE & REPORTING</td>
+                    </tr>
+                    <tr data-category="compliance" data-classification="tier1" data-barti="has">
+                        <td>
+                            <div class="feature-name">HIPAA Compliance Certification</div>
+                            <div class="feature-desc">Encrypted data, audit logs, BAA, access controls</div>
+                        </td>
+                        <td><span class="badge badge-tier1">Table Stakes (Tier 1)</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td class="importance-critical">CRITICAL - Legal requirement</td>
+                    </tr>
+                    <tr data-category="compliance" data-classification="tier2" data-barti="has">
+                        <td>
+                            <div class="feature-name">MIPS Reporting</div>
+                            <div class="feature-desc">Meaningful Use / MIPS quality measure tracking</div>
+                        </td>
+                        <td><span class="badge badge-tier2">Table Stakes (Tier 2)</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ Likely</span></td>
+                        <td class="importance-moderate">MODERATE - Federal incentive</td>
+                    </tr>
+                    <tr data-category="compliance" data-classification="tier2" data-barti="has">
+                        <td>
+                            <div class="feature-name">Practice Analytics / Dashboards</div>
+                            <div class="feature-desc">Revenue, productivity, patient volume reports</div>
+                        </td>
+                        <td><span class="badge badge-tier2">Table Stakes (Tier 2)</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ Likely</span></td>
+                        <td class="importance-moderate">MODERATE - Business intelligence</td>
+                    </tr>
+
+                    <!-- Infrastructure / Platform -->
+                    <tr class="category-header" data-category="platform">
+                        <td colspan="9">INFRASTRUCTURE / PLATFORM</td>
+                    </tr>
+                    <tr data-category="platform" data-classification="tier3" data-barti="has">
+                        <td>
+                            <div class="feature-name">Cloud-Based / SaaS</div>
+                            <div class="feature-desc">Access via web browser, no on-premise servers required</div>
+                        </td>
+                        <td><span class="badge badge-tier3">Table Stakes (Tier 3)</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td class="importance-moderate">MODERATE - Modern expectation</td>
+                    </tr>
+                    <tr data-category="platform" data-classification="emerging" data-barti="unknown">
+                        <td>
+                            <div class="feature-name">Multi-Location Support</div>
+                            <div class="feature-desc">Manage multiple practice locations from single system (centralized reporting, role-based access)</div>
+                        </td>
+                        <td><span class="badge badge-emerging">Emerging Stakes</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ YES (strong)</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ YES (strong)</span></td>
+                        <td><span class="status-unknown">❓ Unknown</span></td>
+                        <td class="importance-high">HIGH - Critical for PE partnerships</td>
+                    </tr>
+
+                    <!-- Customer Support -->
+                    <tr class="category-header" data-category="support">
+                        <td colspan="9">CUSTOMER SUPPORT</td>
+                    </tr>
+                    <tr data-category="support" data-classification="emerging" data-barti="has">
+                        <td>
+                            <div class="feature-name">Dedicated Onboarding</div>
+                            <div class="feature-desc">White-glove implementation and training for new customers</div>
+                        </td>
+                        <td><span class="badge badge-emerging">Emerging Stakes</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-partial">⚠️ Mixed</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ Likely</span></td>
+                        <td class="importance-high">HIGH - Prevents early churn</td>
+                    </tr>
+
+                    <!-- Specialty-Specific -->
+                    <tr class="category-header" data-category="specialty">
+                        <td colspan="9">SPECIALTY-SPECIFIC (Ophthalmology)</td>
+                    </tr>
+                    <tr data-category="specialty" data-classification="tier2" data-barti="missing">
+                        <td>
+                            <div class="feature-name">ASC Integration</div>
+                            <div class="feature-desc">Ambulatory surgery center workflows, OR scheduling (ophthalmology-specific)</div>
+                        </td>
+                        <td><span class="badge badge-tier2">Table Stakes (for Ophth)</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-yes">✅ YES (strong)</span></td>
+                        <td><span class="status-no">❌ No</span></td>
+                        <td><span class="status-yes">✅ Yes</span></td>
+                        <td><span class="status-no">❌ No</span></td>
+                        <td><span class="status-no">❌ No</span></td>
+                        <td class="importance-moderate">MODERATE - Future expansion</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <footer>
+            <strong>Last Updated:</strong> 2025-11-08 | <strong>Data Sources:</strong> Perplexity API competitive research, user reviews (G2, Capterra, Software Advice), vendor websites
+        </footer>
+    </div>
+
+    <script>
+        // Filter functionality
+        const categoryFilter = document.getElementById('categoryFilter');
+        const classificationFilter = document.getElementById('classificationFilter');
+        const bartiFilter = document.getElementById('bartiFilter');
+        const tableBody = document.getElementById('tableBody');
+        const rows = tableBody.querySelectorAll('tr:not(.category-header)');
+        const categoryHeaders = tableBody.querySelectorAll('tr.category-header');
+
+        function applyFilters() {
+            const selectedCategory = categoryFilter.value;
+            const selectedClassification = classificationFilter.value;
+            const selectedBarti = bartiFilter.value;
+
+            // Filter data rows
+            rows.forEach(row => {
+                const category = row.getAttribute('data-category');
+                const classification = row.getAttribute('data-classification');
+                const barti = row.getAttribute('data-barti');
+
+                const categoryMatch = selectedCategory === 'all' || category === selectedCategory;
+                const classificationMatch = selectedClassification === 'all' || classification === selectedClassification;
+                const bartiMatch = selectedBarti === 'all' ||
+                                   (selectedBarti === 'has' && barti === 'has') ||
+                                   (selectedBarti === 'missing' && (barti === 'unknown' || barti === 'missing'));
+
+                if (categoryMatch && classificationMatch && bartiMatch) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+
+            // Show/hide category headers based on visible rows
+            categoryHeaders.forEach(header => {
+                const category = header.getAttribute('data-category');
+                const visibleRowsInCategory = Array.from(rows).filter(row =>
+                    row.getAttribute('data-category') === category &&
+                    row.style.display !== 'none'
+                ).length;
+
+                header.style.display = visibleRowsInCategory > 0 ? '' : 'none';
+            });
+        }
+
+        categoryFilter.addEventListener('change', applyFilters);
+        classificationFilter.addEventListener('change', applyFilters);
+        bartiFilter.addEventListener('change', applyFilters);
+    </script>
+</body>
+</html>
