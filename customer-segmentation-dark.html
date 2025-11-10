@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Segmentation Matrix</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: #0a0a0a;
+            padding: 40px 20px;
+            color: #ffffff;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: transparent;
+            padding: 20px;
+        }
+
+        .matrix-container {
+            margin: 30px 0;
+            background: transparent;
+            border: 2px solid #4a4a4a;
+            border-radius: 10px;
+            padding: 30px;
+        }
+
+        .matrix-grid {
+            display: grid;
+            grid-template-columns: 100px 1fr 1fr;
+            grid-template-rows: 40px 1fr 1fr;
+            gap: 2px;
+            background: #4a4a4a;
+            border: 2px solid #6b7280;
+        }
+
+        .matrix-label {
+            background: #1a1a1a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: #d1d5db;
+            font-size: 12px;
+            padding: 8px;
+            text-align: center;
+        }
+
+        .matrix-cell {
+            background: #0f0f0f;
+            padding: 20px;
+            min-height: 200px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cell-priority {
+            display: inline-block;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 4px 8px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            align-self: flex-start;
+        }
+
+        .priority-highest {
+            background: #34d399;
+            color: #0a0a0a;
+        }
+
+        .priority-medium {
+            background: #fbbf24;
+            color: #0a0a0a;
+        }
+
+        .priority-low {
+            background: #ef4444;
+            color: #ffffff;
+        }
+
+        .cell-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 12px;
+        }
+
+        .segment-examples {
+            font-size: 13px;
+            color: #9ca3af;
+            margin-bottom: 12px;
+            line-height: 1.5;
+        }
+
+        .segment-examples strong {
+            color: #d1d5db;
+        }
+
+        .segment-metric {
+            margin-top: auto;
+            padding-top: 12px;
+            border-top: 1px solid #2a2a2a;
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+        .segment-metric div {
+            margin-bottom: 4px;
+        }
+
+        .segment-metric strong {
+            color: #d1d5db;
+        }
+
+        .axis-labels {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 12px;
+            color: #6b7280;
+            line-height: 1.6;
+        }
+
+        .axis-labels strong {
+            color: #9ca3af;
+        }
+
+        /* Quadrant highlights */
+        .quickwins {
+            background: rgba(251, 191, 36, 0.1) !important;
+        }
+
+        .beachhead {
+            background: rgba(52, 211, 153, 0.15) !important;
+        }
+
+        .avoid {
+            background: rgba(239, 68, 68, 0.1) !important;
+        }
+
+        .future {
+            background: rgba(251, 191, 36, 0.1) !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="matrix-container">
+            <div class="matrix-grid">
+                <!-- Labels -->
+                <div class="matrix-label" style="grid-column: 1; grid-row: 1;"></div>
+                <div class="matrix-label" style="grid-column: 2; grid-row: 1;">Lower Strategic Value</div>
+                <div class="matrix-label" style="grid-column: 3; grid-row: 1;">Higher Strategic Value</div>
+                <div class="matrix-label" style="grid-column: 1; grid-row: 2;">Easier to Win</div>
+                <div class="matrix-label" style="grid-column: 1; grid-row: 3;">Harder to Win</div>
+
+                <!-- Quadrant 1: Easy to Win + Lower Value -->
+                <div class="matrix-cell quickwins" style="grid-column: 2; grid-row: 2;">
+                    <span class="cell-priority priority-medium">Quick Wins</span>
+                    <div class="cell-title">Solo & Small Practices</div>
+                    <div class="segment-examples">
+                        <strong>Who:</strong> 1-2 OD practices, greenfield startups, frustrated legacy users (Compulink/Eyefinity)<br>
+                        <strong>Why winnable:</strong> Low switching cost, fast decisions (2-4 weeks)<br>
+                        <strong>Strategy:</strong> Volume play - fast onboarding, land & expand
+                    </div>
+                    <div class="segment-metric">
+                        <div><strong>Ease of Win:</strong> High</div>
+                        <div><strong>ACV:</strong> $5-7.5K</div>
+                        <div><strong>TAM:</strong> ~10,000 practices</div>
+                    </div>
+                </div>
+
+                <!-- Quadrant 2: Easy to Win + Higher Value (BEACHHEAD) -->
+                <div class="matrix-cell beachhead" style="grid-column: 3; grid-row: 2;">
+                    <span class="cell-priority priority-highest">🎯 BEACHHEAD</span>
+                    <div class="cell-title">Mid-Size Practices with Pain</div>
+                    <div class="segment-examples">
+                        <strong>Who:</strong> 3-5 OD practices with acute EHR frustration (workflow, support, or RCM pain)<br>
+                        <strong>Why winnable:</strong> Specific pain + higher budget + referenceable<br>
+                        <strong>Strategy:</strong> Supplement → Replace (land with RCM add-on, expand to full EHR switch)
+                    </div>
+                    <div class="segment-metric">
+                        <div><strong>Ease of Win:</strong> Medium</div>
+                        <div><strong>ACV:</strong> $10-15K</div>
+                        <div><strong>TAM:</strong> ~3,000 practices</div>
+                    </div>
+                </div>
+
+                <!-- Quadrant 3: Hard to Win + Lower Value (AVOID) -->
+                <div class="matrix-cell avoid" style="grid-column: 2; grid-row: 3;">
+                    <span class="cell-priority priority-low">Avoid</span>
+                    <div class="cell-title">Happy Incumbent Customers</div>
+                    <div class="segment-examples">
+                        <strong>Who:</strong> Satisfied RevolutionEHR/Nextech customers, PE-mandated EHRs<br>
+                        <strong>Why hard:</strong> High retention (94-97%), no pain, long sales cycles (6+ months)<br>
+                        <strong>Strategy:</strong> Avoid - don't compete head-on with happy incumbents
+                    </div>
+                    <div class="segment-metric">
+                        <div><strong>Ease of Win:</strong> Very Low</div>
+                        <div><strong>ACV:</strong> Variable</div>
+                        <div><strong>TAM:</strong> Large but unreachable</div>
+                    </div>
+                </div>
+
+                <!-- Quadrant 4: Hard to Win + Higher Value (FUTURE) -->
+                <div class="matrix-cell future" style="grid-column: 3; grid-row: 3;">
+                    <span class="cell-priority priority-medium">Build Toward</span>
+                    <div class="cell-title">PE Platforms & Large Groups</div>
+                    <div class="segment-examples">
+                        <strong>Who:</strong> 50-200 practice PE rollouts, 10+ location groups<br>
+                        <strong>Why hard:</strong> Requires proven retention + scale + multi-location features<br>
+                        <strong>Strategy:</strong> Build toward - prove retention first, then pursue with proof points
+                    </div>
+                    <div class="segment-metric">
+                        <div><strong>Ease of Win:</strong> Low (today)</div>
+                        <div><strong>ACV:</strong> $50K-500K+</div>
+                        <div><strong>TAM:</strong> 30+ PE firms</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="axis-labels">
+                <strong>X-Axis:</strong> Long-term revenue potential, network effects, expansion revenue<br>
+                <strong>Y-Axis:</strong> Switching cost, sales cycle length, competitive intensity, acute pain
+            </div>
+        </div>
+    </div>
+</body>
+</html>

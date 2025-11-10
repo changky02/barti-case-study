@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Competitive Battle Card</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: #0a0a0a;
+            padding: 40px 20px;
+            color: #ffffff;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: transparent;
+            padding: 20px;
+        }
+
+        .legend {
+            background: #0f0f0f;
+            border: 1px solid #2a2a2a;
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .legend-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #d1d5db;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: #9ca3af;
+        }
+
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .legend-dot.differentiate {
+            background: #34d399;
+        }
+
+        .legend-dot.parity {
+            background: #60a5fa;
+        }
+
+        .battle-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 13px;
+            border: 2px solid #4a4a4a;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .battle-table thead {
+            background: #1a1a1a;
+            color: #ffffff;
+        }
+
+        .battle-table th {
+            padding: 14px 12px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-right: 1px solid #2a2a2a;
+        }
+
+        .battle-table th:last-child {
+            border-right: none;
+        }
+
+        .battle-table td {
+            padding: 10px 10px;
+            vertical-align: top;
+            border-bottom: 1px solid #2a2a2a;
+            border-right: 1px solid #1a1a1a;
+            line-height: 1.4;
+            background: #0f0f0f;
+        }
+
+        .battle-table td:last-child {
+            border-right: none;
+        }
+
+        .battle-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .battle-table tbody tr:hover td {
+            background: #1a1a1a;
+        }
+
+        .competitor-name {
+            font-size: 14px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 4px;
+        }
+
+        .competitor-meta {
+            font-size: 11px;
+            color: #6b7280;
+            line-height: 1.4;
+        }
+
+        .weakness-text {
+            font-size: 13px;
+            color: #d1d5db;
+            line-height: 1.6;
+        }
+
+        .feature-item {
+            margin-bottom: 6px;
+            padding-left: 18px;
+            position: relative;
+        }
+
+        .feature-item:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 4px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .feature-item.differentiate:before {
+            background: #34d399;
+        }
+
+        .feature-item.parity:before {
+            background: #60a5fa;
+        }
+
+        .feature-name {
+            font-size: 12px;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .feature-why {
+            font-size: 10px;
+            color: #9ca3af;
+            font-style: italic;
+            margin-top: 1px;
+        }
+
+        .gtm-tag {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .gtm-supplement {
+            background: rgba(96, 165, 250, 0.2);
+            color: #60a5fa;
+            border: 1px solid #60a5fa;
+        }
+
+        .gtm-fullswitch {
+            background: rgba(52, 211, 153, 0.2);
+            color: #34d399;
+            border: 1px solid #34d399;
+        }
+
+        .gtm-text {
+            font-size: 12px;
+            color: #9ca3af;
+            line-height: 1.5;
+        }
+
+        /* Highlight row for All Competitors */
+        .highlight-row td {
+            background: rgba(52, 211, 153, 0.1) !important;
+        }
+
+        .highlight-row:hover td {
+            background: rgba(52, 211, 153, 0.15) !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="legend">
+            <div class="legend-title">Legend:</div>
+            <div class="legend-item">
+                <div class="legend-dot differentiate"></div>
+                <span><strong>Differentiate</strong> - Our competitive edge vs. this specific competitor</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-dot parity"></div>
+                <span><strong>Parity</strong> - Table stakes, match but don't over-invest</span>
+            </div>
+        </div>
+
+        <table class="battle-table">
+            <thead>
+                <tr>
+                    <th style="width: 140px;">Competitor</th>
+                    <th style="width: 190px;">Their Weakness</th>
+                    <th style="width: 240px;">Our Product Response</th>
+                    <th style="width: 190px;">GTM Approach</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- RevolutionEHR -->
+                <tr>
+                    <td>
+                        <div class="competitor-name">RevolutionEHR</div>
+                        <div class="competitor-meta">
+                            97% retention<br>
+                            ~3,000 practices<br>
+                            Dominant in OD
+                        </div>
+                    </td>
+                    <td>
+                        <div class="weakness-text">
+                            • Workflow inefficiency (too many clicks)<br>
+                            • Poor device integrations<br>
+                            • Minimal RCM capabilities
+                        </div>
+                    </td>
+                    <td>
+                        <div class="feature-item differentiate">
+                            <div class="feature-name">RCM Suite</div>
+                            <div class="feature-why">They have minimal RCM - we're comprehensive</div>
+                        </div>
+
+                        <div class="feature-item parity">
+                            <div class="feature-name">Workflow Automation</div>
+                            <div class="feature-why">Save for full switch phase</div>
+                        </div>
+
+                        <div class="feature-item parity">
+                            <div class="feature-name">Device Integrations</div>
+                            <div class="feature-why">Save for full switch phase</div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="gtm-tag gtm-supplement">Supplement → Replace</div>
+                        <div class="gtm-text">
+                            <strong>Angle:</strong> RCM pain - they lack denial prevention<br>
+                            <strong>Land:</strong> RCM add-on<br>
+                            <strong>Expand:</strong> Full switch when workflow pain intensifies
+                        </div>
+                    </td>
+                </tr>
+
+                <!-- ModMed -->
+                <tr>
+                    <td>
+                        <div class="competitor-name">ModMed</div>
+                        <div class="competitor-meta">
+                            ~90% retention<br>
+                            5,000+ practices<br>
+                            Multi-specialty
+                        </div>
+                    </td>
+                    <td>
+                        <div class="weakness-text">
+                            • Generic (not OD-specific)<br>
+                            • "Black box" AI<br>
+                            • No predictive denial analytics
+                        </div>
+                    </td>
+                    <td>
+                        <div class="feature-item differentiate">
+                            <div class="feature-name">AI Transparency & Outcomes Reporting</div>
+                            <div class="feature-why">Show "$X saved" - they have "black box" AI</div>
+                        </div>
+
+                        <div class="feature-item differentiate">
+                            <div class="feature-name">Predictive Denial Analytics</div>
+                            <div class="feature-why">They only have reactive coding validation</div>
+                        </div>
+
+                        <div class="feature-item parity">
+                            <div class="feature-name">RCM Suite (Basic)</div>
+                            <div class="feature-why">They have RCM - we add intelligence layer</div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="gtm-tag gtm-supplement">Supplement → Replace</div>
+                        <div class="gtm-text">
+                            <strong>Angle:</strong> AI transparency - OD practices want to see WHY denials happen<br>
+                            <strong>Target:</strong> OD-only practices using ModMed<br>
+                            <strong>Land:</strong> AI intelligence layer<br>
+                            <strong>Expand:</strong> Full switch
+                        </div>
+                    </td>
+                </tr>
+
+                <!-- Nextech -->
+                <tr>
+                    <td>
+                        <div class="competitor-name">Nextech</div>
+                        <div class="competitor-meta">
+                            94% retention<br>
+                            ~4,000 practices<br>
+                            Ophth-first
+                        </div>
+                    </td>
+                    <td>
+                        <div class="weakness-text">
+                            • Minimal AI<br>
+                            • Third-party RCM (Gateway EDI)<br>
+                            • Poor support
+                        </div>
+                    </td>
+                    <td>
+                        <div class="feature-item differentiate">
+                            <div class="feature-name">Native RCM Integration</div>
+                            <div class="feature-why">Fully integrated vs. their Gateway EDI bolted-on</div>
+                        </div>
+
+                        <div class="feature-item differentiate">
+                            <div class="feature-name">AI-Powered Eligibility + Denials</div>
+                            <div class="feature-why">They have basic eligibility, no AI layer</div>
+                        </div>
+
+                        <div class="feature-item parity">
+                            <div class="feature-name">Customer Support</div>
+                            <div class="feature-why">Not product - but critical to GTM (white-glove)</div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="gtm-tag gtm-supplement">Supplement → Replace</div>
+                        <div class="gtm-text">
+                            <strong>Angle:</strong> RCM integration pain - tired of third-party Gateway EDI<br>
+                            <strong>Land:</strong> Replace Gateway EDI with native RCM<br>
+                            <strong>Expand:</strong> Win on support quality
+                        </div>
+                    </td>
+                </tr>
+
+                <!-- Compulink & Eyefinity -->
+                <tr>
+                    <td>
+                        <div class="competitor-name">Compulink<br>Eyefinity</div>
+                        <div class="competitor-meta">
+                            85-90% retention<br>
+                            2-3K practices each<br>
+                            Legacy platforms
+                        </div>
+                    </td>
+                    <td>
+                        <div class="weakness-text">
+                            • Legacy technology<br>
+                            • Slow feature velocity<br>
+                            • 10-15% annual churn
+                        </div>
+                    </td>
+                    <td>
+                        <div class="feature-item differentiate">
+                            <div class="feature-name">Modern Cloud Platform</div>
+                            <div class="feature-why">Already have - legacy vs. modern is the wedge</div>
+                        </div>
+
+                        <div class="feature-item differentiate">
+                            <div class="feature-name">AI Capabilities (Any)</div>
+                            <div class="feature-why">They have zero AI - anything we have wins</div>
+                        </div>
+
+                        <div class="feature-item parity">
+                            <div class="feature-name">Migration Tooling</div>
+                            <div class="feature-why">Make it easy to switch - not a differentiator</div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="gtm-tag gtm-fullswitch">Full Switch</div>
+                        <div class="gtm-text">
+                            <strong>Angle:</strong> Already frustrated - want modern + AI<br>
+                            <strong>Skip supplement</strong> - direct full EHR replacement<br>
+                            10-15% churn = actively looking to leave
+                        </div>
+                    </td>
+                </tr>
+
+                <!-- Cross-Competitor -->
+                <tr class="highlight-row">
+                    <td>
+                        <div class="competitor-name">All Competitors</div>
+                        <div class="competitor-meta">
+                            Universal gap
+                        </div>
+                    </td>
+                    <td>
+                        <div class="weakness-text">
+                            • No predictive denial analytics<br>
+                            • Single-practice data silos<br>
+                            • No cross-practice intelligence
+                        </div>
+                    </td>
+                    <td>
+                        <div class="feature-item differentiate">
+                            <div class="feature-name">Cross-Practice Payer Intelligence</div>
+                            <div class="feature-why">Unique moat - competitors can't replicate without our network</div>
+                        </div>
+
+                        <div class="feature-item differentiate">
+                            <div class="feature-name">Predictive Denial Analytics</div>
+                            <div class="feature-why">Industry has reactive validation only</div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="gtm-tag gtm-supplement">Core Value Prop</div>
+                        <div class="gtm-text">
+                            <strong>Angle:</strong> Network effects - every customer makes payer intelligence smarter<br>
+                            Foundation for all GTM motions - every sale strengthens the moat
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
